@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        height: 800px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+<script>
+    var postoffice=['臺中市西屯區臺灣大道4段1727號(東海大學內)','臺中市西屯區河南路2段268號','臺中市西屯區黎明路3段130號'];
+    var postofficeLatLng=['24.181587,120.603122','24.175272,120.649134','24.17669,120.637643'];
+      function initMap() {
+        var map = new 
+                google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                center: {lat:24.1790281,lng:120.599454},
+                rotateControl: true,
+                zoomControl: true,
+                mapTypeId:'hybrid'});
+
+          for(var i=0;i<postoffice.length;i++){
+              var latLng=postofficeLatLng[i].split(",");
+              var position={lat:parseFloat(latLng[0]),lng:parseFloat(latLng[1])};
+
+              
+
+                var marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                icon: "./postoffice.png"
+                });
+
+                marker.addListener('mouseover',function(){
+                    infowindow.open(map, marker);
+                    map.setCenter(marker.getPosition());
+                });
+
+                var infowindow = new google.maps.InfoWindow({
+                  content: '<div> <h3>'+postoffice[i]+'</h3> </div>'
+                });
+
+          }
+
+          /*
+        var fcu = {lat:24.1790281,lng:120.599454};
+
+        var map = new 
+          google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: fcu,
+            rotateControl: true,
+            zoomControl: true,
+            mapTypeId:'hybrid'
+          });
+
+
+        var marker = new google.maps.Marker({
+          position: fcu,
+          map: map,
+          icon: "./postoffice.png"
+        });
+
+        marker.addListener('mouseover',function(){
+            //map.setZoom(18);
+            //map.setCenter(marker.getPosition());
+            infowindow.open(map, marker);
+        });
+
+        var contentString = '<div>' +
+                '<h3>臺中市西屯區臺灣大道4段1727號(東海大學內)</h3>' +
+                '</div>';
+                var infowindow = new google.maps.InfoWindow({
+                  content: contentString
+                });*/
+      }  
+</script>
+    <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3pNgXaReQ1qNg9vB6dV4OP-d0Ew8saW4&callback=initMap">
+    </script>
+  </body>
+</html>
